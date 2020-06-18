@@ -55,6 +55,7 @@ import javax.xml.xpath.XPathFactory;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.hisp.dhis.analytics.AggregationType;
+import org.hisp.dhis.analytics.UserOrgUnitType;
 import org.hisp.dhis.attribute.Attribute;
 import org.hisp.dhis.attribute.AttributeValue;
 import org.hisp.dhis.category.Category;
@@ -66,14 +67,13 @@ import org.hisp.dhis.category.CategoryOptionGroupSet;
 import org.hisp.dhis.category.CategoryService;
 import org.hisp.dhis.chart.Chart;
 import org.hisp.dhis.chart.ChartType;
-import org.hisp.dhis.color.Color;
-import org.hisp.dhis.color.ColorSet;
 import org.hisp.dhis.common.CodeGenerator;
 import org.hisp.dhis.common.DataDimensionType;
 import org.hisp.dhis.common.DeliveryChannel;
 import org.hisp.dhis.common.DimensionalObject;
 import org.hisp.dhis.common.IdentifiableObject;
 import org.hisp.dhis.common.IllegalQueryException;
+import org.hisp.dhis.common.OrganisationUnitSelectionMode;
 import org.hisp.dhis.common.ValueType;
 import org.hisp.dhis.common.cache.CacheStrategy;
 import org.hisp.dhis.constant.Constant;
@@ -100,6 +100,9 @@ import org.hisp.dhis.indicator.IndicatorGroupSet;
 import org.hisp.dhis.indicator.IndicatorType;
 import org.hisp.dhis.legend.Legend;
 import org.hisp.dhis.legend.LegendSet;
+import org.hisp.dhis.mapping.MapView;
+import org.hisp.dhis.mapping.MapViewRenderingStrategy;
+import org.hisp.dhis.mapping.ThematicMapType;
 import org.hisp.dhis.notification.SendStrategy;
 import org.hisp.dhis.option.Option;
 import org.hisp.dhis.option.OptionSet;
@@ -121,6 +124,7 @@ import org.hisp.dhis.program.ProgramIndicator;
 import org.hisp.dhis.program.ProgramStage;
 import org.hisp.dhis.program.ProgramStageDataElement;
 import org.hisp.dhis.program.ProgramStageSection;
+import org.hisp.dhis.program.ProgramStatus;
 import org.hisp.dhis.program.ProgramTrackedEntityAttribute;
 import org.hisp.dhis.program.ProgramTrackedEntityAttributeGroup;
 import org.hisp.dhis.program.ProgramType;
@@ -1272,22 +1276,6 @@ public abstract class DhisConvenienceTest
         return legendSet;
     }
 
-    public static ColorSet createColorSet( char uniqueCharacter, String... hexColorCodes )
-    {
-        ColorSet colorSet = new ColorSet();
-        colorSet.setAutoFields();
-        colorSet.setName( "ColorSet" + uniqueCharacter );
-
-        for ( String colorCode : hexColorCodes )
-        {
-            Color color = new Color( colorCode );
-            color.setAutoFields();
-            colorSet.getColors().add( color );
-        }
-
-        return colorSet;
-    }
-
     public static Visualization createVisualization( final String name )
     {
         final Visualization visualization = new Visualization();
@@ -1356,6 +1344,23 @@ public abstract class DhisConvenienceTest
         user.setAutoFields();
 
         return user;
+    }
+
+    public static MapView createMapView( String layer )
+    {
+        MapView mapView = new MapView();
+        mapView.setAutoFields();
+
+        mapView.setLayer( layer );
+        mapView.setAggregationType( AggregationType.SUM );
+        mapView.setThematicMapType( ThematicMapType.CHOROPLETH );
+        mapView.setProgramStatus( ProgramStatus.COMPLETED );
+        mapView.setOrganisationUnitSelectionMode( OrganisationUnitSelectionMode.DESCENDANTS );
+        mapView.setRenderingStrategy( MapViewRenderingStrategy.SINGLE );
+        mapView.setUserOrgUnitType( UserOrgUnitType.DATA_CAPTURE );
+        mapView.setNoDataColor( "#ddeeff" );
+
+        return mapView;
     }
 
     public static UserCredentials createUserCredentials( char uniqueCharacter, User user )

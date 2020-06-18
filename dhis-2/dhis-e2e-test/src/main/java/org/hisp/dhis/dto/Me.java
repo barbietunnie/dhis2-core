@@ -1,4 +1,4 @@
-package org.hisp.dhis.schema.descriptors;
+package org.hisp.dhis.dto;
 
 /*
  * Copyright (c) 2004-2020, University of Oslo
@@ -28,35 +28,55 @@ package org.hisp.dhis.schema.descriptors;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import org.hisp.dhis.color.ColorSet;
-import org.hisp.dhis.schema.Schema;
-import org.hisp.dhis.schema.SchemaDescriptor;
-import org.hisp.dhis.security.Authority;
-import org.hisp.dhis.security.AuthorityType;
+import java.util.List;
 
-import com.google.common.collect.Lists;
-
-/**
- * @author Lars Helge Overland
- */
-public class ColorSetSchemaDescriptor implements SchemaDescriptor
+public class Me
 {
-    public static final String SINGULAR = "colorSet";
+    private List<UserGroup> userGroups;
 
-    public static final String PLURAL = "colorSets";
+    private List<OrgUnit> teiSearchOrganisationUnits;
 
-    public static final String API_ENDPOINT = "/" + PLURAL;
+    private List<OrgUnit> organisationUnits;
 
-    @Override
-    public Schema getSchema()
+    private List<String> authorities;
+
+    public List<UserGroup> getUserGroups()
     {
-        Schema schema = new Schema( ColorSet.class, SINGULAR, PLURAL );
-        schema.setRelativeApiEndpoint( API_ENDPOINT );
-        schema.setOrder( 1080 );
+        return userGroups;
+    }
 
-        schema.getAuthorities().add( new Authority( AuthorityType.CREATE, Lists.newArrayList( "F_COLOR_SET_ADD" ) ) );
-        schema.getAuthorities().add( new Authority( AuthorityType.DELETE, Lists.newArrayList( "F_COLOR_SET_DELETE" ) ) );
+    public void setUserGroups( List<UserGroup> userGroups )
+    {
+        this.userGroups = userGroups;
+    }
 
-        return schema;
+    public List<OrgUnit> getTeiSearchOrganisationUnits()
+    {
+        return teiSearchOrganisationUnits;
+    }
+
+    public void setTeiSearchOrganisationUnits( List<OrgUnit> teiSearchOrganisationUnits )
+    {
+        this.teiSearchOrganisationUnits = teiSearchOrganisationUnits;
+    }
+
+    public List<OrgUnit> getOrganisationUnits()
+    {
+        return organisationUnits;
+    }
+
+    public void setOrganisationUnits( List<OrgUnit> organisationUnits )
+    {
+        this.organisationUnits = organisationUnits;
+    }
+
+    public List<String> getAuthorities()
+    {
+        return authorities;
+    }
+
+    public void setAuthorities( List<String> authorities )
+    {
+        this.authorities = authorities;
     }
 }

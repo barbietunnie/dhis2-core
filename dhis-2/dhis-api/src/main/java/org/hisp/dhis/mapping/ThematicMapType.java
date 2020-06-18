@@ -1,5 +1,3 @@
-package org.hisp.dhis.webapi.controller;
-
 /*
  * Copyright (c) 2004-2020, University of Oslo
  * All rights reserved.
@@ -28,17 +26,15 @@ package org.hisp.dhis.webapi.controller;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import org.hisp.dhis.color.ColorSet;
-import org.hisp.dhis.schema.descriptors.ColorSetSchemaDescriptor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+package org.hisp.dhis.mapping;
 
 /**
+ * Represents the type of thematic map visualisation.
+ *
  * @author Lars Helge Overland
  */
-@Controller
-@RequestMapping( value = ColorSetSchemaDescriptor.API_ENDPOINT )
-public class ColorSetController
-    extends AbstractCrudController<ColorSet>
+public enum ThematicMapType
 {
+    CHOROPLETH,
+    BUBBLE;
 }
