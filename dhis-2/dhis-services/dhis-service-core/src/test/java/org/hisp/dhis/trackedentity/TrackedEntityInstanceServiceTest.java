@@ -81,60 +81,54 @@ public class TrackedEntityInstanceServiceTest
 
     private ProgramInstance programInstanceA;
 
-    private Program programA;
-
     private TrackedEntityInstance entityInstanceA1;
 
     private TrackedEntityInstance entityInstanceB1;
 
-    private TrackedEntityAttribute entityInstanceAttribute;
-
-    private OrganisationUnit organisationUnit;
-
     @Override
     public void setUpTest()
     {
-        organisationUnit = createOrganisationUnit( 'A' );
-        organisationUnitService.addOrganisationUnit( organisationUnit );
+        final OrganisationUnit organisationUnit = createOrganisationUnit('A');
+        organisationUnitService.addOrganisationUnit(organisationUnit);
 
         OrganisationUnit organisationUnitB = createOrganisationUnit( 'B' );
         organisationUnitService.addOrganisationUnit( organisationUnitB );
 
-        entityInstanceAttribute = createTrackedEntityAttribute( 'A' );
-        attributeService.addTrackedEntityAttribute( entityInstanceAttribute );
+        final TrackedEntityAttribute entityInstanceAttribute = createTrackedEntityAttribute('A');
+        attributeService.addTrackedEntityAttribute(entityInstanceAttribute);
 
-        entityInstanceA1 = createTrackedEntityInstance( organisationUnit );
-        entityInstanceB1 = createTrackedEntityInstance( organisationUnit );
+        entityInstanceA1 = createTrackedEntityInstance(organisationUnit);
+        entityInstanceB1 = createTrackedEntityInstance(organisationUnit);
         entityInstanceB1.setUid( "UID-B1" );
 
-        programA = createProgram( 'A', new HashSet<>(), organisationUnit );
+        final Program programA = createProgram('A', new HashSet<>(), organisationUnit);
 
-        programService.addProgram( programA );
+        programService.addProgram(programA);
 
-        ProgramStage stageA = createProgramStage( 'A', programA );
+        ProgramStage stageA = createProgramStage( 'A', programA);
         stageA.setSortOrder( 1 );
         programStageService.saveProgramStage( stageA );
 
         Set<ProgramStage> programStages = new HashSet<>();
         programStages.add( stageA );
         programA.setProgramStages( programStages );
-        programService.updateProgram( programA );
+        programService.updateProgram(programA);
 
         DateTime enrollmentDate = DateTime.now();
         enrollmentDate.withTimeAtStartOfDay();
         enrollmentDate = enrollmentDate.minusDays( 70 );
 
-        DateTime incidenDate = DateTime.now();
-        incidenDate.withTimeAtStartOfDay();
+        DateTime incidentDate = DateTime.now();
+        incidentDate.withTimeAtStartOfDay();
 
-        programInstanceA = new ProgramInstance( enrollmentDate.toDate(), incidenDate.toDate(), entityInstanceA1,
-            programA );
+        programInstanceA = new ProgramInstance( enrollmentDate.toDate(), incidentDate.toDate(), entityInstanceA1,
+                programA);
         programInstanceA.setUid( "UID-A" );
-        programInstanceA.setOrganisationUnit( organisationUnit );
+        programInstanceA.setOrganisationUnit(organisationUnit);
 
         programStageInstanceA = new ProgramStageInstance( programInstanceA, stageA );
         programInstanceA.setUid( "UID-PSI-A" );
-        programInstanceA.setOrganisationUnit( organisationUnit );
+        programInstanceA.setOrganisationUnit(organisationUnit);
     }
 
     @Test
