@@ -1,8 +1,8 @@
 name: Generate and Merge SBOMs and Upload them to DependencyTrack every night
 
-on:
-  schedule:
-    - cron: "0 0 * * *" # Run every day at midnight
+# on:
+#   schedule:
+#     - cron: "0 0 * * *" # Run every day at midnight
 
 concurrency:
   group: ${{ github.workflow}}-${{ github.ref }}
